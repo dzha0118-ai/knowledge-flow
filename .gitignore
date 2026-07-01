@@ -1,0 +1,10 @@
+node_modules/
+dist/
+hf_space/static/
+*.local
+.env
+.DS_Store
+*.log
+test_*.py
+check_*.py
+tsconfig.tsbuildinfo
