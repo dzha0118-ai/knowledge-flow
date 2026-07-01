@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #0a0a1a;
+  color: #e2e8f0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4B7BFF44;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4B7BFF88;
+}
+
+/* Register CSS custom properties so they can be interpolated by keyframes */
+@property --shimmer-pos {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --flow-x {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 30%;
+}
+
+@property --flow-y {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 20%;
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+  }
+
+  .glow-text {
+    text-shadow: 0 0 20px rgba(75, 123, 255, 0.4), 0 0 40px rgba(75, 123, 255, 0.15);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #4B7BFF 0%, #A78BFA 50%, #F59E0B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Motionsites-style flowing light on text */
+  .text-shimmer {
+    background: linear-gradient(
+      90deg,
+      #4B7BFF 0%,
+      #A78BFA 25%,
+      #F59E0B 50%,
+      #60A5FA 75%,
+      #4B7BFF 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .text-flow-light {
+    background: radial-gradient(
+      80% 110% at var(--flow-x, 30%) var(--flow-y, 20%),
+      #D0B2FF 0%,
+      #FFEED8 42%,
+      #E8400D 88%
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: flowGradient 5s ease-in-out infinite;
+  }
+}
+
+/* Keyframes MUST be outside @layer to work reliably */
+@keyframes shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+@keyframes flowGradient {
+  0%, 100% { --flow-x: 30%; --flow-y: 20%; }
+  25%      { --flow-x: 70%; --flow-y: 55%; }
+  50%      { --flow-x: 55%; --flow-y: 80%; }
+  75%      { --flow-x: 20%; --flow-y: 50%; }
+}
